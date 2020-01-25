@@ -7,6 +7,7 @@ const flash = require("connect-flash");
 const session = require("express-session");
 const passport = require('passport');
 const config = require("./config/database");
+const port = process.env.PORT || 8000;
 
 mongoose.connect(config.database, { useNewUrlParser: true });
 
@@ -93,6 +94,7 @@ app.use("/articles", articles);
 let users = require("./routes/users");
 app.use("/users", users);
 
-app.listen(8000, function callback() {
-  console.log("Server is listening");
+
+app.listen(port, () => {
+  console.log("App is running on port " + port);
 });
