@@ -91,19 +91,7 @@ app.get("/", function(req, res) {
   });
 });
 
-app.get("*", function(req, res, next) {
-  Article.find({}, function(err, articles) {
-    console.log(articles);
-    if (err) {
-      console.log(err);
-    } else {
-      res.render("index", {
-        title: "Home",
-        articles: articles
-      });
-    }
-  });
-});
+
 
 let articles = require("./routes/articles");
 app.use("/articles", articles);
