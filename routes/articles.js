@@ -70,7 +70,20 @@ router.post("/edit/:id", function(req, res) {
   let errors = req.validationErrors();
 
   if (errors) {
-    res.redirect("/article/edit/"+req.params.id);
+    Article.findById(req.params.id, function(err, article) {
+      if (article.author != req.user._id) {
+        req.flash("danger", "Not authorized");
+        res.redirect("/");
+      }
+      User.findById(article.author, function(err, user) {
+        res.render("edit_article", {
+          title: "Edit Article",
+          article: article,
+          author: user.name,
+          errors:errors
+        });
+      });
+    });
   } else {
     let article = {};
     article.title = req.body.title;
