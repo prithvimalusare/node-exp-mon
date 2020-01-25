@@ -70,10 +70,7 @@ router.post("/edit/:id", function(req, res) {
   let errors = req.validationErrors();
 
   if (errors) {
-    res.render("edit_article", {
-      title: "edit Article",
-      errors: errors
-    });
+    res.redirect("/article/edit/"+req.params.id);
   } else {
     let article = {};
     article.title = req.body.title;
