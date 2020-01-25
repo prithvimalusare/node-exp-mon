@@ -5,11 +5,15 @@ const bodyParser = require("body-parser");
 const expressValidator = require("express-validator");
 const flash = require("connect-flash");
 const session = require("express-session");
-const passport = require('passport');
+const passport = require("passport");
 const config = require("./config/database");
 const port = process.env.PORT || 8000;
 
-mongoose.connect(config.database, { useNewUrlParser: true });
+mongoose.connect(
+  config.database,
+  { useNewUrlParser: true },
+  { useUnifiedTopology: true }
+);
 
 let db = mongoose.connection;
 
@@ -64,17 +68,30 @@ app.use(
   })
 );
 
-require('./config/passport')(passport);
+require("./config/passport")(passport);
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.get('*', function (req, res, next) {
+app.get("*", function(req, res, next) {
   res.locals.user = req.user || null;
   next();
 });
 
-
 app.get("/", function(req, res) {
+  Article.find({}, function(err, articles) {
+    console.log(articles);
+    if (err) {
+      console.log(err);
+    } else {
+      res.render("index", {
+        title: "Home",
+        articles: articles
+      });
+    }
+  });
+});
+
+app.get("*", function(req, res, next) {
   Article.find({}, function(err, articles) {
     console.log(articles);
     if (err) {
@@ -93,7 +110,6 @@ app.use("/articles", articles);
 
 let users = require("./routes/users");
 app.use("/users", users);
-
 
 app.listen(port, () => {
   console.log("App is running on port " + port);
