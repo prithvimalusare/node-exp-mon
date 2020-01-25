@@ -70,8 +70,8 @@ router.post("/edit/:id", function(req, res) {
   let errors = req.validationErrors();
 
   if (errors) {
-    res.render("add_article", {
-      title: "Add Article",
+    res.render("edit_article", {
+      title: "edit Article",
       errors: errors
     });
   } else {
