@@ -93,6 +93,6 @@ app.use("/articles", articles);
 let users = require("./routes/users");
 app.use("/users", users);
 
-app.listen(3000, function callback() {
-  console.log("Server is listening on port 3000...");
+app.listen(8000, function callback() {
+  console.log("Server is listening");
 });
