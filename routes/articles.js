@@ -64,7 +64,7 @@ router.get("/edit/:id", ensureAuthenticated, function(req, res) {
 // Update Submit POST Route
 router.post("/edit/:id", function(req, res) {
   req.checkBody("title", "Title is required").notEmpty();
-  req.checkBody("author", "Author is required").notEmpty();
+  //req.checkBody("author", "Author is required").notEmpty();
   req.checkBody("body", "Body is required").notEmpty();
 
   let errors = req.validationErrors();
@@ -122,7 +122,7 @@ router.get("/:id", function(req, res) {
   Article.findById(req.params.id, function(err, article) {
     User.findById(article.author, function(err, user) {
       res.render("article", {
-        title: "Edit Article",
+        title: "Article",
         article: article
       });
     });
